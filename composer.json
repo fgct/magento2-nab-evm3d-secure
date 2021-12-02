@@ -2,7 +2,7 @@
     "name": "fgct/magento2-nab-evm3d-secure",
     "description": "NAB EVM 3D Secure Payment Module for Magento 2",
     "type": "magento2-module",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "autoload": {
         "files": [ "registration.php" ],
         "psr-4": {

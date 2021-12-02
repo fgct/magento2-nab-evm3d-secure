@@ -33,15 +33,6 @@
                                                                 </item>
                                                             </item>
                                                         </item>
-                                                        <item name="additional-payment-validators" xsi:type="array">
-                                                            <item name="children" xsi:type="array">
-                                                                <!-- Declare your validation. START -->
-                                                                <item name="nabevm3d-validator" xsi:type="array">
-                                                                    <item name="component" xsi:type="string">Fgc_NabEvm3D/js/view/validation</item>
-                                                                </item>
-                                                                <!-- Declare your validation. END -->
-                                                            </item>
-                                                        </item>
                                                     </item>
                                                 </item>
                                             </item>

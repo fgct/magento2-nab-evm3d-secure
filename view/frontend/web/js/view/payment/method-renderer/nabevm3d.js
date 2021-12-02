@@ -73,27 +73,32 @@ define([
 
             validateData: function() {
                 var billingAddress = quote.billingAddress();
-                var email = window.checkoutConfig.customerData.email;
+                var email = window.checkoutConfig.customerData.email || quote.guestEmail;
 
                 var result = true;
+
+                switch (true) {
+                    case (!email):
+                        alert({
+                            content: "Missing email address",
+                        });
+                        result = false;
+                        break;
+                    case (!billingAddress || !billingAddress.street || !billingAddress.street[0] || !billingAddress.firstname):
+                        alert({
+                            content: "Missing billing address",
+                        });
+                        result = false;
+                        break;
+                    case (!creditCardData.creditCardNumber || !creditCardData.expirationMonth || !creditCardData.expirationYear):
+                        alert({
+                            content: "Missing credit card detail",
+                        });
+                        result = false;
+                        break;
                 
-                if (!email) {
-                    alert({
-                        content: "Missing email address",
-                    });
-                    result = false;
-                }
-                if (!billingAddress || !billingAddress.street || !billingAddress.street[0] || !billingAddress.firstname) {
-                    alert({
-                        content: "Missing billing address",
-                    });
-                    result = false;
-                }
-                if (!creditCardData.creditCardNumber || !creditCardData.expirationMonth || !creditCardData.expirationYear) {
-                    alert({
-                        content: "Missing credit card detail",
-                    });
-                    result = false;
+                    default:
+                        break;
                 }
                 return result;
             },
@@ -146,7 +151,7 @@ define([
 
             onRequestInputDataCallback: function() {
                 var billingAddress = quote.billingAddress();
-                var email = window.checkoutConfig.customerData.email;
+                var email = window.checkoutConfig.customerData.email || quote.guestEmail;
                 var data = {
                     cardholderInfo: {
                         cardholderName: billingAddress.firstname + ' ' + billingAddress.lastname,
@@ -165,7 +170,7 @@ define([
                         zipCode: billingAddress.postcode,
                     }
                 }
-                console.log('onRequestInputDataCallback', data);
+
                 return data;
             },
             onThreeDSResultsResponseCallback: function(res) {

@@ -1,13 +1,14 @@
 {
-    "name": "fgc/magento2-nab-evm-3d-secure",
+    "name": "fgct/magento2-nab-evm-3d-secure",
     "description": "NAB EVM 3D Secure Payment Module for Magento 2",
     "type": "magento2-module",
-    "version": "1.0.1",
+    "keywords": ["Nab EVM 3D secure", "NAB", "3D secure", "Magento 2"],
+    "version": "1.0.3",
     "license": "GPL-3.0-only",
     "authors": [
         {
             "name": "KhoaZero123",
-            "email": "jkhoazero123@gmail.com"
+            "email": "khoazero123@gmail.com"
         }
     ],
     "autoload": {
@@ -17,6 +18,7 @@
         }
     },
     "require": {
+        "php": ">=5.3.0",
         "fgct/nab_evm_3d_secure": "^1.2"
     }
 }

@@ -168,6 +168,9 @@ define([
                         state: billingAddress.regionCode,
                         country: billingAddress.countryId,
                         zipCode: billingAddress.postcode,
+                    },
+                    threeDSInfo: {
+                        threeDSReqAuthMethodInd: '01'
                     }
                 }
 

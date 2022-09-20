@@ -4,7 +4,7 @@ namespace Fgc\NabEvm3D\Helper;
 
 use \Magento\Framework\App\Helper\AbstractHelper;
 use \Magento\Framework\App\Helper\Context;
-use Fgc\NabEvm3dSecure\Auth;
+use Fgc\NabEvm3D\Lib\Auth;
 use Fgc\NabEvm3D\Model\LiabilityShift;
 
 class Data extends AbstractHelper

@@ -4,7 +4,7 @@ namespace Fgc\NabEvm3D\Model;
 
 use Magento\Framework\DataObject;
 use Magento\Quote\Api\Data\PaymentInterface;
-use Fgc\NabEvm3D\Helper\Data;
+use Fgc\NabEvm3D\Helper\Data as Helper;
 
 class NabEvm3D extends \Magento\Payment\Model\Method\Cc
 {
@@ -20,53 +20,6 @@ class NabEvm3D extends \Magento\Payment\Model\Method\Cc
      */
     protected $helper;
 
-    /**
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory
-     * @param \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory
-     * @param \Magento\Payment\Helper\Data $paymentData
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param Logger $logger
-     * @param \Magento\Framework\Module\ModuleListInterface $moduleList
-     * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
-     * @param array $data
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     */
-    public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory,
-        \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory,
-        \Magento\Payment\Helper\Data $paymentData,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Payment\Model\Method\Logger $logger,
-        \Magento\Framework\Module\ModuleListInterface $moduleList,
-        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        array $data = [],
-        Data $helper
-    ) {
-        parent::__construct(
-            $context,
-            $registry,
-            $extensionFactory,
-            $customAttributeFactory,
-            $paymentData,
-            $scopeConfig,
-            $logger,
-            $moduleList,
-            $localeDate,
-            $resource,
-            $resourceCollection,
-            $data
-        );
-        $this->helper = $helper;
-    }
-
     public function validate()
     {
         /*
@@ -81,6 +34,10 @@ class NabEvm3D extends \Magento\Payment\Model\Method\Cc
         $eci = $info->getAdditionalInformation('eci');
 
         $errorMsg = false;
+
+        if (!$this->helper) {
+            $this->helper = \Magento\Framework\App\ObjectManager::getInstance()->create(Helper::class);
+        }
 
         switch ($transStatus) {
             case 'Y':
@@ -170,6 +127,9 @@ class NabEvm3D extends \Magento\Payment\Model\Method\Cc
 
             // make API request to credit card processor.
             // $response = $this->makeCaptureRequest($request);
+            if (!$this->helper) {
+                $this->helper = \Magento\Framework\App\ObjectManager::getInstance()->create(Helper::class);
+            }
             $response = $this->helper->processTransaction($request);
 
             $payment->setTransactionId($response['txnID']);
@@ -265,6 +225,9 @@ class NabEvm3D extends \Magento\Payment\Model\Method\Cc
     public function makeCaptureRequest($request)
     {
         try {
+            if (!$this->helper) {
+                $this->helper = \Magento\Framework\App\ObjectManager::getInstance()->create(Helper::class);
+            }
             $response = $this->helper->processTransaction($request);
             return $response;
         } catch (\Exception $e) {
